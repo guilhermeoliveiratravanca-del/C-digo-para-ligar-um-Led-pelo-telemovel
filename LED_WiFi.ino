@@ -3,8 +3,10 @@
 #include <WiFiAP.h>
 
 WiFiServer server(80);
+const int pinoLED= 2;
 
  void setup(){
+	pinMode(pinoLED, OUTPUT);
     Serial.begin(115200);
 	WiFi.softAP("LED","12120078");
 	Serial.print("IP: ");
@@ -41,14 +43,16 @@ WiFiServer server(80);
 		 }
 	 
 	 
-		 if (HTTP_req.indexOF("GET /LIGAR") >= 0){
-			   Serial.prinln("Ligou");
+		 if (HTTP_req.indexOf("GET /LIGAR") >= 0){
+			   Serial.println("Ligou");
+			   digitalWrite(pinoLED, HIGH);
 		 }
-		 if (HTTP_req.indexOF("GET /DESLIGAR") >= 0) {
+		 if (HTTP_req.indexOf("GET /DESLIGAR") >= 0) {
 			   Serial.println("Desligou");
+			   digitalWrite(pinoLED, LOW);
 		 }
 		 client.stop();
 	 }
  }
 
- 
+
